@@ -1,0 +1,64 @@
+trigger: none
+  # branches:
+  #   include:
+      # - main
+      # - develop
+
+pool:
+  name: "Testing Automation Self Hosted Pool"
+
+variables:
+  NODE_VERSION: "22.x"
+  WORKERS: "4"
+  TEST_ENV: "trunk"
+
+steps:
+  # Checkout Source
+  - checkout: self
+    clean: true
+
+  # Install Node.js
+  - task: UseNode@1
+    displayName: "Install Node.js"
+    inputs:
+      version: "$(NODE_VERSION)"
+
+  # Verify Installation
+  - script: |
+      node -v
+      npm -v
+    displayName: "Verify Node & NPM"
+
+  # Install Dependencies
+  - script: |
+      npm ci
+    displayName: "Install NPM Packages"
+
+  # # Install Playwright Browsers
+  # - script: |
+  #     npx playwright install chromium firefox webkit
+  #   displayName: "Install Playwright Browsers"
+
+  # Run Playwright Tests in Parallel
+  - script: |
+      npx playwright test --workers=$(WORKERS)
+    displayName: "Run Playwright Tests"
+    env:
+      TEST_ENV: $(TEST_ENV)
+    continueOnError: true
+
+  # Publish HTML Report
+  - task: PublishPipelineArtifact@1
+    displayName: "Publish Playwright Report"
+    condition: always()
+    inputs:
+      targetPath: "playwright-report"
+      artifact: "PlaywrightReport"
+
+  # Publish Test Results Folder
+  - task: PublishPipelineArtifact@1
+    displayName: "Publish Test Artifacts"
+    condition: always()
+    inputs:
+      targetPath: "test-results"
+      artifact: "TestResults"

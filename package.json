@@ -1,0 +1,41 @@
+{
+  "name": "easyinnkeeping",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Playwright test automation for EasyInnKeeping SSO login flows",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:trunk": "cross-env TEST_ENV=trunk playwright test",
+    "test:test1": "cross-env TEST_ENV=test1 playwright test",
+    "test:sort-order:test1": "cross-env TEST_ENV=test1 playwright test tests/Calendar/SortChartsBy.spec.ts \"tests/OnlineBooking/Display Order.spec.ts\" --project=property-b",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:report": "playwright show-report",
+    "install:drivers": "playwright install",
+    "agent": "npx -y tsx playwright-agent/src/index.ts"
+  },
+  "keywords": [
+    "playwright",
+    "e2e",
+    "automation",
+    "testing"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@faker-js/faker": "^10.5.0",
+    "@playwright/test": "^1.61.1",
+    "@types/mssql": "^12.3.0",
+    "@types/node": "^26.0.1",
+    "cross-env": "^10.0.0",
+    "tsx": "^4.23.0",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "imapflow": "^1.7.0",
+    "mssql": "^12.6.0"
+  }
+}

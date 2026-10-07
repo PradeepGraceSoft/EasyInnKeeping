@@ -1,0 +1,24 @@
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+LoginSessionStorage/*.json
+results.xml
+
+# Local payment gateway credentials (never commit secrets)
+config/payment-gateways.env
+
+# Separate checkout used for the fresh GitHub history
+.github-publish/
+
+# Local configuration and diagnostic artifacts
+config/*.env
+.codex/
+.vscode/
+.playwright-mcp/
+LoginSessionStorage/
+*.log
